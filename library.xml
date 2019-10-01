@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+	<Technical Books>
+		<ISBN>978-1608058839</ISBN>
+		<title>Introduction to Computer Data Representation	</title>
+		<author>Peter Fenwick</author>
+	</Technical Books>
+	<Technical Books>
+		<ISBN>978-3319607887</ISBN>
+		<title>Programming Language Concepts</title>
+		<author>Peter Sestoft</author>
+	</Technical Books>
+	<Cookery Books>
+		<ISBN>978-1641524032</ISBN>
+		<title>The Modern Cast Iron Cookbook: A New Generation of Easy, Fresh, and Healthy Recipes</title>
+		<author>Tiffany La Forge</author>
+	</Cookery Books>
+	<Cookery Books>
+		<ISBN>978-0718187729</ISBN>
+		<title>5 Ingredients - Quick & Easy Food</title>
+		<author>Jamie Oliver</author>
+	</Cookery Books>
+</library>
