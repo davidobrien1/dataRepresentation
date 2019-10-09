@@ -16,29 +16,32 @@
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
-                <tr>
-                    <td>191 M0 123</td>
-                    <td>Ford</td>
-                    <td>Modeo</td>
-                    <td>25,000</td>
-                    <td><button onclick="showUpdate(this)">update</button></td>
-                    <td><button>delete</button></td>
-                    </tr>
-                <tr>
+                <tr id="191 Mo 123">
+                        <td>191 Mo 123</td>
+                        <td>Ford</td>
+                        <td>Modeo</td>
+                        <td>25000</td>
+                        <td><button onclick="showUpdate(this)">Update</button></td>
+                        <td><button onclick="doDelete(this)">Delete</button></td>
+                            
+                </tr>
+                <tr id="12 G 123">
                     <td>12 G 123</td>
-                    <td>Fait</td>
+                    <td>Fiat</td>
                     <td>Punto</td>
                     <td>12</td>
                     <td><button onclick="showUpdate(this)">Update</button></td>
-                    <td><button>Delete</button></td>  
+                    <td><button onclick="doDelete(this)">Delete</button></td>
+                    
                 </tr>
-                <tr>
+                <tr id="05 D 123"> 
                     <td>05 D 123</td>
                     <td>Nissan</td>
                     <td>Almera</td>
                     <td>500</td>
                     <td><button onclick="showUpdate(this)">Update</button></td>
-                    <td><button>Delete</button></td>    
+                    <td><button onclick="doDelete(this)">Delete</button></td>
+                        
                 </tr>
             </table>
         </div>
@@ -69,15 +72,11 @@
         document.getElementById('doUpdateButton').style.display="none"
     }
     function showUpdate(buttonElement){
-        document.getElementById('showCreateButton').style.display="none"
-        document.getElementById('carTable').style.display="none"
-        document.getElementById('createUpdateForm').style.display="block"
-
-        document.getElementById('createLabel').style.display="none"
-        document.getElementById('updateLabel').style.display="inline"
-
-        document.getElementById('doCreateButton').style.display="none"
-        document.getElementById('doUpdateButton').style.display="block"
+    ….// other code here
+        var rowElement = buttonElement.parentNode.parentNode
+        // these is a way of finding the closest <tr> which would safer, closest()
+        var car = getCarFromRow(rowElement)
+        populateFormWithCar(car)
     }
     function doCreate(){
         var form = document.getElementById('createUpdateForm')
