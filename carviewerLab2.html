@@ -5,7 +5,7 @@
     </head>
     <body>
         <h1>Cars</h1>
-        <div><button id="showCreateButton">Create</button></div>
+        <div><button id="showCreateButton" onclick="showCreate()">Create</button></div>
         <div>
             <table class="table" id="carTable">
                 <tr>
@@ -43,7 +43,7 @@
             </table>
         </div>
         <div id='createUpdateForm' style="display: none">
-            <h2><span>Create a</span> <span>Update this</span> Car</h2>
+            <h2><span id="createLabel">Create a</span> <span id="updateLabel">update</span> Car</h2>
             Reg <input type="text" name="reg"><br/>
             Make <select name="make">
                 <option value="Ford">Ford</option>
@@ -52,8 +52,15 @@
             </select><br/>
             Model <input type="text" name="model"><br/>
             Price <input type="number" name="price"><br/>
-            <span><button>Create</button></span>
-            <span><button>Update</button></span>
+            <span><button id="doCreateButton" onclick="doCreate()">Create</button></span>
+            <span><button id="doUpdateButton" onclick="doUpdate()">Update</button></span>
         </div>
     </body>
+    <script>
+    function showCreate(){
+        document.getElementById('showCreateButton').style.display="none"
+        document.getElementById('carTable').style.display="none"
+        document.getElementById('createUpdateForm').style.display="block"
+    }
+    </script>
 </html>
