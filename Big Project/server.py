@@ -93,10 +93,12 @@ def addRun(runnerId):
 
 
     return jsonify(foundRunners[0])
-#TODO: Finish this
-# @app.route('/totalruns/leaderboard')
-# def getleaderBoard():
-#     return "in get leaderBoard"
+
+@app.route('/runs/leaderboard')
+def getleaderBoard():
+    runners.sort(key=lambda x: x['totalRuns'], reverse=True)
+
+    return jsonify(runners)
 
 
 
