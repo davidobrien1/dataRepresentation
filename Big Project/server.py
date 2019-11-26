@@ -2,53 +2,49 @@ from flask import Flask, jsonify, request, abort
 
 app = Flask(__name__, static_url_path='', static_folder='.')
 
-runs=[
-    { "id":1, "date":"20/11/19", "name":"Amy", "distance":5.01, "time":0.45},
-     { "id":2, "date":"18/11/19", "name":"Sean", "distance":5.01, "time":0.46},
-    { "id":3, "date":"27/10/19", "name":"David", "distance":10.01, "time":0.87},
+runners=[
+    { "id":1, "name":"Amy", "totalRuns":5},
+    { "id":2, "name":"Sean", "totalRuns":10},
+    { "id":3, "name":"David", "totalRuns":15},
+    { "id":4, "name":"Jessica", "totalRuns":20},
+    { "id":5, "name":"Una", "totalRuns":25},
+    { "id":6, "name":"Padraic", "totalRuns":30},
 ]
-nextId=4
-#app = Flask(__name__)
+nextId=7
 
-#@app.route('/')
-#def index():
-#    return "Hello, World!"
-
-#curl "http://127.0.0.1:5000/runs"
-@app.route('/runs')
+#curl "http://127.0.0.1:5000/runners"
+@app.route('/runners')
 def getAll():
-    return jsonify(runs)
+    return jsonify(runners)
 
-#curl "http://127.0.0.1:5000/runs/2"
-@app.route('/runs/<int:id>')
+#curl "http://127.0.0.1:5000/runners/2"
+@app.route('/runners/<int:id>')
 def findById(id):
-    foundRuns = list(filter(lambda t: t['id'] == id, runs))
-    if len(foundRuns) == 0:
+    foundRunners = list(filter(lambda t: t['id'] == id, runners))
+    if len(foundRunners) == 0:
         return jsonify ({}) , 204
 
-    return jsonify(foundRuns[0])
+    return jsonify(foundRunners[0])
 
-#curl  -i -H "Content-Type:application/json" -X POST -d "{\"date\":\"25/11/19\",\"name\":\"David\",\"distance\":7,\"time\":35}" "http://127.0.0.1:5000/runs"
-@app.route('/runs', methods=['POST'])
+#curl  -i -H "Content-Type:application/json" -X POST -d "{\"name\":\"Mary\",\"totalRuns\":7}" "http://127.0.0.1:5000/runners"
+@app.route('/runners', methods=['POST'])
 def create():
     global nextId
     if not request.json:
         abort(400)
     # other checking 
-    run = {
+    runner = {
         "id": nextId,
-        "date": request.json['date'],
         "name": request.json['name'],
-        "distance": request.json['distance'],
-        "time": request.json['time']
+        "totalRuns": request.json['totalRuns']
     }
     nextId += 1
-    runs.append(run)
-    return jsonify(run)
+    runners.append(runner)
+    return jsonify(runner)
 
 #curl  -i -H "Content-Type:application/json" -X PUT -d "{\"Title\":\"hello\",\"Author\":\"someone\",\"Price\":123}" http://127.0.0.1:5000/books/1
 # TODO - update::
-# @app.route('/runs/<int:id>', methods=['PUT'])
+# @app.route('/runners/<int:id>', methods=['PUT'])
 # def update(id):
 #     foundRuns = list(filter(lambda t: t['id']== id, runs))
 #     if (len(foundRuns) == 0):
@@ -72,19 +68,31 @@ def create():
 
 #     return "in update for id "+str(id)
 
-#curl -X DELETE "http://127.0.0.1:5000/runs/4"
-@app.route('/runs/<int:id>' , methods=['DELETE'])
+#curl -X DELETE "http://127.0.0.1:5000/runners/8"
+@app.route('/runners/<int:id>' , methods=['DELETE'])
 def delete(id):
-    foundRuns = list(filter(lambda t: t['id']== id, runs))
-    if (len(foundRuns) == 0):
+    foundRunners = list(filter(lambda t: t['id']== id, runners))
+    if (len(foundRunners) == 0):
         abort(404)
-    runs.remove(foundRuns[0])
+    runners.remove(foundRunners[0])
     return jsonify({"done":True})
 
-#TODO: Finish this
-# @app.route('/totalruns/<int:id>' , methods=['POST'])
-# def addRun(runnerId):
-#     return "in add Run for funner" + str(runnerId)
+# curl  -i -H "Content-Type:application/json" -X POST -d "{\"runs\":200}" "http://127.0.0.1:5000/runs/2
+@app.route('/runs/<int:runnerId>', methods = ['POST'])
+def addRun(runnerId):
+    foundRunners=list(filter(lambda t : t['id']==runnerId, runners))
+    if len(foundRunners)== 0:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if not 'runs' in request.json or type(request.json['runs']) is not int:
+        abort(401)
+    newRuns = request.json['runs']
+
+    foundRunners[0]['totalRuns'] += newRuns
+
+
+    return jsonify(foundRunners[0])
 #TODO: Finish this
 # @app.route('/totalruns/leaderboard')
 # def getleaderBoard():
