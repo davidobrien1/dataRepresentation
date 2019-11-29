@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request, abort
-from zstudentDAO import studentDAO
 
 app = Flask(__name__, static_url_path='', static_folder='.')
 
