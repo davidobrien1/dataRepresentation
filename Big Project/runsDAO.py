@@ -1,5 +1,5 @@
 import mysql.connector
-class StudentDAO:
+class RunsDAO:
     db=""
     def __init__(self): 
         self.db = mysql.connector.connect(
@@ -8,11 +8,13 @@ class StudentDAO:
         password="",
         #user="datarep",  # this is the user name on my mac
         #passwd="password" # for my mac
-        database="datarepresentation"
+        database="running"
         )
+    
+            
     def create(self, values):
         cursor = self.db.cursor()
-        sql="insert into student (name, age) values (%s,%s)"
+        sql="insert into runs (date, name, distance, time) values (%s,%s,%s,%s)"
         cursor.execute(sql, values)
 
         self.db.commit()
@@ -20,27 +22,34 @@ class StudentDAO:
 
     def getAll(self):
         cursor = self.db.cursor()
-        sql="select * from student"
+        sql="select * from runs"
         cursor.execute(sql)
-        result = cursor.fetchall()
-        return result
+        results = cursor.fetchall()
+        returnArray = []
+        print(results)
+        for result in results:
+            print(result)
+            returnArray.append(self.convertToDictionary(result))
+
+        return returnArray
 
     def findByID(self, id):
         cursor = self.db.cursor()
-        sql="select * from student where id = %s"
+        sql="select * from runs where id = %s"
         values = (id,)
 
         cursor.execute(sql, values)
         result = cursor.fetchone()
-        return result
+        return self.convertToDictionary(result)
+
     def update(self, values):
         cursor = self.db.cursor()
-        sql="update student set name= %s, age=%s  where id = %s"
+        sql="update runs set date= %s, name=%s, distance=%s, time=%s  where id = %s"
         cursor.execute(sql, values)
         self.db.commit()
     def delete(self, id):
         cursor = self.db.cursor()
-        sql="delete from student where id = %s"
+        sql="delete from runs where id = %s"
         values = (id,)
 
         cursor.execute(sql, values)
@@ -48,4 +57,17 @@ class StudentDAO:
         self.db.commit()
         print("delete done")
 
-studentDAO = StudentDAO()
+    def convertToDictionary(self, result):
+        colnames=['id', 'date', 'name','distance', 'time']
+        item = {}
+        
+        if result:
+            for i, colName in enumerate(colnames):
+                value = result[i]
+                item[colName] = value
+        
+        return item
+    
+
+
+runsDAO = RunsDAO()

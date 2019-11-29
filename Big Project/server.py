@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, abort
-from zstudentDAO import studentDAO
+from runsDAO import runsDAO
 
 app = Flask(__name__, static_url_path='', static_folder='.')
 
@@ -18,32 +18,31 @@ nextId=4
 #curl "http://127.0.0.1:5000/runs"
 @app.route('/runs')
 def getAll():
-    return jsonify(runs)
+    results = runsDAO.getAll()
+    return jsonify(results)
 
 #curl "http://127.0.0.1:5000/runs/2"
 @app.route('/runs/<int:id>')
 def findById(id):
-    foundRuns = list(filter(lambda t: t['id'] == id, runs))
-    if len(foundRuns) == 0:
-        return jsonify ({}) , 204
+    foundRuns = runsDAO.findByID(id)
 
-    return jsonify(foundRuns[0])
+
+    return jsonify(foundRuns)
 
 #curl  -i -H "Content-Type:application/json" -X POST -d "{\"date\":\"25/11/19\",\"name\":\"David\",\"distance\":7,\"time\":35}" "http://127.0.0.1:5000/runs"
 @app.route('/runs', methods=['POST'])
 def create():
-    global nextId
+    
     if not request.json:
         abort(400)
     # other checking 
     run = {
-        "id": nextId,
         "date": request.json['date'],
         "name": request.json['name'],
         "distance": request.json['distance'],
         "time": request.json['time']
     }
-    nextId += 1
+    
     runs.append(run)
     return jsonify(run)
 
