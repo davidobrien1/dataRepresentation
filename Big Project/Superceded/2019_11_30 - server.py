@@ -42,9 +42,8 @@ def create():
         "distance": request.json['distance'],
         "time": request.json['time']
     }
-    values = (run['date'],run['name'],run['distance'],run['time'])
-    newId = runsDAO.create(values)
-    run['id'] = newId
+    
+    runs.append(run)
     return jsonify(run)
 
 #curl  -i -H "Content-Type:application/json" -X PUT -d "{\"Title\":\"hello\",\"Author\":\"someone\",\"Price\":123}" http://127.0.0.1:5000/books/1
