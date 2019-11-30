@@ -47,31 +47,33 @@ def create():
     run['id'] = newId
     return jsonify(run)
 
-#curl  -i -H "Content-Type:application/json" -X PUT -d "{\"Title\":\"hello\",\"Author\":\"someone\",\"Price\":123}" http://127.0.0.1:5000/books/1
-# TODO - update::
-# @app.route('/runs/<int:id>', methods=['PUT'])
-# def update(id):
-#     foundRuns = list(filter(lambda t: t['id']== id, runs))
-#     if (len(foundRuns) == 0):
-#         abort(404)
-#     foundRun = foundBooks[0]
-#     if not request.json:
-#         abort(400)
-#     reqJson = request.json
-#     if 'distance' in reqJson and type(reqJson['distance']) is not int:
-#         abort(400)
+#curl  -i -H "Content-Type:application/json" -X PUT -d "{\"date\":\"19/6/23\",\"name\":\"Donal\",\"distance\":5,\"time\":25}" http://127.0.0.1:5000/runs/1
+@app.route('/runs/<int:id>', methods=['PUT'])
+def update(id):
+    foundRuns = runsDAO.findByID(id)
+    if not foundRuns:
+        abort(404)
 
-#     if 'Title' in reqJson:
-#         foundBook['Title'] = reqJson['Title']
-#     if 'Author' in reqJson:
-#         foundBook['Author'] = reqJson['Author']
-#     if 'Price' in reqJson:
-#         foundBook['Price'] = reqJson['Price']
-    
-#     return jsonify(foundBook)
+    if not request.json:
+        abort(400)
+    reqJson = request.json
+    if 'distance' in reqJson and type(reqJson['distance']) is not float:
+        abort(400)
+    if 'time' in reqJson and type(reqJson['time']) is not float:
+        abort(400)        
+
+    if 'date' in reqJson:
+        foundRuns['date'] = reqJson['date']
+    if 'name' in reqJson:
+        foundRuns['name'] = reqJson['name']
+    if 'distance' in reqJson:
+        foundRuns['distance'] = reqJson['distance']
+    if 'time' in reqJson:
+        foundRuns['time'] = reqJson['time']
+    values = (foundRuns['date'],foundRuns['name'],foundRuns['distance'],foundRuns['time'],foundRuns['id'])
+    runsDAO.update(values)
+    return jsonify(foundRuns)
         
-
-#     return "in update for id "+str(id)
 
 #curl -X DELETE "http://127.0.0.1:5000/runs/4"
 @app.route('/runs/<int:id>' , methods=['DELETE'])
