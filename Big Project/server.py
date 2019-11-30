@@ -3,12 +3,7 @@ from runsDAO import runsDAO
 
 app = Flask(__name__, static_url_path='', static_folder='.')
 
-runs=[
-    { "id":1, "date":"20/11/19", "name":"Amy", "distance":5.01, "time":0.45},
-     { "id":2, "date":"18/11/19", "name":"Sean", "distance":5.01, "time":0.46},
-    { "id":3, "date":"27/10/19", "name":"David", "distance":10.01, "time":0.87},
-]
-nextId=4
+
 #app = Flask(__name__)
 
 #@app.route('/')
@@ -78,10 +73,7 @@ def update(id):
 #curl -X DELETE "http://127.0.0.1:5000/runs/4"
 @app.route('/runs/<int:id>' , methods=['DELETE'])
 def delete(id):
-    foundRuns = list(filter(lambda t: t['id']== id, runs))
-    if (len(foundRuns) == 0):
-        abort(404)
-    runs.remove(foundRuns[0])
+    runsDAO.delete(id)
     return jsonify({"done":True})
 
 #TODO: Finish this
