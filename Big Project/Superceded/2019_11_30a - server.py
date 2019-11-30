@@ -52,9 +52,9 @@ def update(id):
     if not request.json:
         abort(400)
     reqJson = request.json
-    if 'distance' in reqJson and type(reqJson['distance']) is not float:
+    if 'distance' in reqJson and type(reqJson['distance']) is not int:
         abort(400)
-    if 'time' in reqJson and type(reqJson['time']) is not float:
+    if 'time' in reqJson and type(reqJson['time']) is not int:
         abort(400)        
 
     if 'date' in reqJson:
