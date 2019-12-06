@@ -42,6 +42,15 @@ class RunsDAO:
         result = cursor.fetchone()
         return self.convertToDictionary(result)
 
+    # def findByName(self, name):
+    #     cursor = self.db.cursor()
+    #     sql="select * from runs where name = %s"
+    #     values = (name,)
+
+    #     cursor.execute(sql, values)
+    #     result = cursor.fetchone()
+    #     return self.convertToDictionary(result)
+
     def update(self, values):
         cursor = self.db.cursor()
         sql="update runs set date= %s, name=%s, distance=%s, time=%s  where id = %s"

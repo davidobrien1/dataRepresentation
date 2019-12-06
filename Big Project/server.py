@@ -24,6 +24,14 @@ def findById(id):
 
     return jsonify(foundRuns)
 
+# #curl "http://127.0.0.1:5000/runs/Padraic"
+# @app.route('/runs/<name>')
+# def findByName(name):
+#     foundRuns = runsDAO.findByName(name)
+
+
+#     return jsonify(foundRuns)
+
 #curl  -i -H "Content-Type:application/json" -X POST -d "{\"date\":\"25/11/19\",\"name\":\"David\",\"distance\":7,\"time\":35}" "http://127.0.0.1:5000/runs"
 @app.route('/runs', methods=['POST'])
 def create():
