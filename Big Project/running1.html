@@ -61,30 +61,27 @@
     <header>
     </header>  
     <div class="intro">    
-        <h2><center>Running Table</center></h2> <!--creates a heading h2 and centers it-->
-        <p>Some text here</p> <!--this is a paragraph within the intro div-->  
+        <h2><center>Introduction</center></h2> <!--creates a heading h2 and centers it-->
+        <p>This running app allows you to enter runs</p> <!--this is a paragraph within the intro div-->  
     </div>
     <section>
         <nav>
-        <img src="images/runner1.jpg" align="left"  width="180" height="300"> <!--inserts an image, aligns it left with the size attributes stated-->
+
         <p></p>
             <ul> <!--creates an unordered list-->
-                <li><button><a href="running.html">Home </a></li> <!--creates list item which is a button, that when clicked brings you to the home page-->
+                <li><button><a href="search.html">Search for Runs </a></li> <!--creates list item which is a button, that when clicked brings you to the home page-->
             <p></p>	  
-                <li><button><a href="login.html">Login </a></li> <!--creates list item which is a button, that when clicked brings you to the login page-->
+                <li><button><a href="running1.html">View, Create and Edit all Runs </a></li> <!--creates list item which is a button, that when clicked brings you to the login page-->
             </ul>
+        <img src="images/runner1.jpg" align="right"  width="180" height="300"> <!--inserts an image, aligns it left with the size attributes stated-->
         </nav>
 
         <article>
         <!-- <h1>Runs</h1> -->
         <div> 
-            <button id="showCreateButton" onclick="showCreate()">Create New Run</button>
-            <button id="showfindByIdButton" onclick="findByIdAjax()">Find run by Id:</button><input type="text" name="id"/>
-            <button id="showfindByNameButton" onclick="findByNameAjax()">Find run by Name:</button><input type="text" name="Name"/>
-            <!-- <button id="showViewAllButton" onclick="getAllAjax()">View All Runs</button><br></br> -->
-            <button id="showDistanceLeaderButton" onclick="findDistanceLeaderAjax()">Show Distance Leaderboard</button>
-            <button id="showTimeLeaderButton" onclick="findTimeLeaderAjax()">Show Time Leaderboard</button>
-        </div>    
+            <button id="showCreateButton" onclick="showCreate()">Create</button>
+            <!-- <button id="showfindByNameButton" onclick="findByNameAjax()">Find run by Name:</button><input type="text" name="Name"/> -->
+        </div>
         <div>
             <table class="table" id="runTable">
                 <tr>
@@ -265,41 +262,8 @@
                 console.log("error: "+status+" msg:"+error);
             }
         });
-    }
-    function findByIdAjax(){
-        $.ajax({
-            "url": "http://127.0.0.1:5000/runs"+"/"+1,
-            "method":"GET",
-            "data":"",
-            "dataType": "JSON",
-            "success":function(result){
-                //console.log(result);
-                addRunToTable(result);
-                            
-            },
-            "error":function(xhr,status,error){
-                console.log("error: "+status+" msg:"+error);
-            }
-        });   
-    }
-    function findByNameAjax(){
-        $.ajax({
-            "url": "http://127.0.0.1:5000/runs"+"/Padraic",
-            "method":"GET",
-            "data":"",
-            "dataType": "JSON",
-            "success":function(result){
-                //console.log(result);
-                addRunToTable(result);
-                            
-            },
-            "error":function(xhr,status,error){
-                console.log("error: "+status+" msg:"+error);
-            }
-        });   
-    }
 
-
+    }
     function createRunAjax(run){
         //var car = {"reg":"12 D 1234","make":"Fiat","model":"Punto","price":3000}
         console.log(JSON.stringify(run));
@@ -321,6 +285,27 @@
             }
         });
     }
+
+    // function findByNameAjax(){
+    //     $.ajax({
+    //         "url": "http://127.0.0.1:5000/runs/Padraic",
+    //         "method":"GET",
+    //         "data":"",
+    //         "dataType": "JSON",
+    //         "success":function(result){
+    //             //console.log(result);
+    //             for (run of result){
+    //                 addRunToTable(run);
+    //             }
+                
+    //         },
+    //         "error":function(xhr,status,error){
+    //             console.log("error: "+status+" msg:"+error);
+    //         }
+    //     });
+
+    // }
+
     function updateRunAjax(run){
         //var car = {"reg":"12 D 1234","price":8000}
         console.log(JSON.stringify(run));

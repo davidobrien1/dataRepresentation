@@ -42,14 +42,20 @@ class RunsDAO:
         result = cursor.fetchone()
         return self.convertToDictionary(result)
 
-    # def findByName(self, name):
-    #     cursor = self.db.cursor()
-    #     sql="select * from runs where name = %s"
-    #     values = (name,)
+    def findByName(self, name):
+        cursor = self.db.cursor()
+        sql="select * from runs where name = %s"
+        values = (name,)
 
-    #     cursor.execute(sql, values)
-    #     result = cursor.fetchone()
-    #     return self.convertToDictionary(result)
+        cursor.execute(sql, values)
+        results = cursor.fetchall()
+        returnArray = []
+        print(results)
+        for result in results:
+            print(result)
+            returnArray.append(self.convertToDictionary(result))
+
+        return returnArray
 
     def update(self, values):
         cursor = self.db.cursor()
