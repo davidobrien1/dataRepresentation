@@ -24,6 +24,16 @@ def findById(id):
 
     return jsonify(foundRuns)
 
+#curl "http://127.0.0.1:5000/leaderboard"
+@app.route('/leaderboard')
+def getLeaderBoard():
+    results = runsDAO.getLeaderBoard()
+    return jsonify(results)
+
+
+
+
+
 #curl "http://127.0.0.1:5000/runs/Padraic"
 @app.route('/runs/<name>')
 def findByName(name):

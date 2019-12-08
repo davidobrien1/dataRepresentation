@@ -71,16 +71,18 @@
             <ul> <!--creates an unordered list-->
                 <li><button><a href="search.html">Search for Runs </a></li> <!--creates list item which is a button, that when clicked brings you to the home page-->
             <p></p>	  
-                <li><button><a href="running1.html">View and Edit all Runs </a></li> <!--creates list item which is a button, that when clicked brings you to the login page-->
+                <li><button><a href="running1.html">View, Create and Edit all Runs</a></li> <!--creates list item which is a button, that when clicked brings you to the login page-->
+            <p></p>
+                <li><button><a href="leaderboard.html">Leaderboard </a></li>
             </ul>
         <img src="images/runner1.jpg" align="right"  width="180" height="300"> <!--inserts an image, aligns it left with the size attributes stated-->
         </nav>
 
         <article>
         <!-- <h1>Runs</h1> -->
-        <div> 
+        <div id='findByNameForm'> 
             <!-- <button id="showCreateButton" onclick="showCreate()">Create</button> -->
-            <button id="showfindByNameButton" onclick="findByNameAjax()">Find run by Name:</button><input type="text" name="Name"/>
+            <button id="showfindByNameButton" onclick="findByName()">Find run by Name:</button><input type="text" name="name"/>
         </div>
         <div>
             <table class="table" id="runTable">
@@ -159,9 +161,18 @@
         run.time = form.querySelector('input[name="time"]').value
         console.log(JSON.stringify(run))
         createRunAjax(run)
-
-        
     }
+    function findByName(){
+        var form = document.getElementById('findByNameForm')
+        var run = {}  
+        run.name = form.querySelector('input[name="name"]').value
+        console.log(JSON.stringify(run))
+        findByNameAjax(run)
+    }
+
+
+
+
     function doUpdate(){
         var run = getRunFromForm();
         var rowElement = document.getElementById(run.id);
@@ -202,6 +213,16 @@
     function clearForm(){
         var form = document.getElementById('createUpdateForm')
 
+        form.querySelector('input[name="date"]').value=''
+        form.querySelector('input[name="name"]').value=''
+        form.querySelector('input[name="distance"]').value=''
+        form.querySelector('input[name="time"]').value=''
+    }
+
+// use this function to clear the table after finding a run
+    function clearTable(){ 
+        var form = document.getElementById('table')
+        form.querySelector('input[name="id"]').value=''
         form.querySelector('input[name="date"]').value=''
         form.querySelector('input[name="name"]').value=''
         form.querySelector('input[name="distance"]').value=''
@@ -287,9 +308,9 @@
     }
 // START HERE NEED TO CREATE FORM FOR TAKING IN NAME
 
-    function findByNameAjax(){
+    function findByNameAjax(run){
         $.ajax({
-            "url": "http://127.0.0.1:5000/runs/Johnny",
+            "url": "http://127.0.0.1:5000/runs/"+encodeURI(run.name),
             "method":"GET",
             "data":"",
             "dataType": "JSON",

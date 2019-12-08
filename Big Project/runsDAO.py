@@ -42,6 +42,19 @@ class RunsDAO:
         result = cursor.fetchone()
         return self.convertToDictionary(result)
 
+    def getLeaderBoard(self):
+        cursor = self.db.cursor()
+        sql="select *, ROUND(SUM(distance),1) from runs group by name order by distance desc"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        returnArray = []
+        print(results)
+        for result in results:
+            print(result)
+            returnArray.append(self.convertToDictionary(result))
+
+        return returnArray
+
     def findByName(self, name):
         cursor = self.db.cursor()
         sql="select * from runs where name = %s"
