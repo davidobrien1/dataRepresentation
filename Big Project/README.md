@@ -23,6 +23,7 @@ The idea of the web application is that users can:
     - Create the 'running' database: run the 'createRunningDatabase.py' file located in the 'Database Creation' folder
     - Create the 'runs' table in the 'running' database: run the 'createRunsTable.py' file located in the 'Database Creation' folder. This will create the table as follows:
         ¦Field¦Type¦Null¦Key¦Default¦Extra¦
+        ¦---¦---¦---¦---¦---¦---¦
         ¦id¦int(11)¦No¦PRI¦NULL¦auto_increment¦
         ¦date¦date¦YES¦¦NULL¦¦
         ¦name¦varchar(255)¦Yes¦¦NULL¦¦
