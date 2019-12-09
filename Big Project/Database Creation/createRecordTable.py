@@ -8,6 +8,6 @@ db = mysql.connector.connect(
 )
 
 cursor = db.cursor()
-sql="CREATE TABLE runs (id INT AUTO_INCREMENT PRIMARY KEY, date DATE, name VARCHAR(255), distance FLOAT, time FLOAT)"
+sql="CREATE TABLE record (id INT AUTO_INCREMENT PRIMARY KEY, date DATE, name VARCHAR(255), time FLOAT)"
 
 cursor.execute(sql)

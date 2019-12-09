@@ -33,6 +33,19 @@ class RunsDAO:
 
         return returnArray
 
+    def getAllRecords(self):
+        cursor = self.db.cursor()
+        sql="select * from record"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        returnArray = []
+        print(results)
+        for result in results:
+            print(result)
+            returnArray.append(self.convertToDict(result))
+
+        return returnArray
+
     def findByID(self, id):
         cursor = self.db.cursor()
         sql="select * from runs where id = %s"
@@ -87,6 +100,17 @@ class RunsDAO:
 
     def convertToDictionary(self, result):
         colnames=['id', 'date', 'name','distance', 'time']
+        item = {}
+        
+        if result:
+            for i, colName in enumerate(colnames):
+                value = result[i]
+                item[colName] = value
+        
+        return item
+
+    def convertToDict(self, result):
+        colnames=['id', 'date', 'name', 'time']
         item = {}
         
         if result:

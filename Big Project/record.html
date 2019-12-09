@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title> view Runs</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <style>
+    header {
+        background-color: #7884BB;
+        /* opacity: .4; */
+        padding: 5px;
+        text-align: center;
+        font-size: 35px;
+        color: white;
+        border-style: dotted;
+        border-color: black;
+    }
+    .intro {
+        background-color: #CDD1E1;
+        padding: 0px;
+        text-align: center;
+        color: black;
+        border-style: solid;
+        border-color: white; 
+        }
+    section {
+    display: -webkit-flex;
+    display: flex;
+    border-style: dotted;
+    border-color: black;
+    }
+    nav {
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        background: #CDD1E1;
+        padding: 20px;
+        border-style: none dotted none none;
+        border-color: black;
+    }
+    nav ul {
+        list-style-type: none;
+        padding: 0;
+        text-align: center;
+    }
+    article {
+        -webkit-flex: 3;
+        -ms-flex: 3;
+        flex: 3;
+        background-color: #f1f1f1;
+        padding: 10px;
+    }
+
+    </style>
+    
+    </head>
+    <body>
+    <header>
+    </header>  
+    <div class="intro">    
+        <h2><center>Introduction</center></h2> <!--creates a heading h2 and centers it-->
+        <p>This running app allows you to enter runs</p> <!--this is a paragraph within the intro div-->  
+    </div>
+    <section>
+        <nav>
+
+        <p></p>
+            <ul> <!--creates an unordered list-->
+                <li><button><a href="search.html">Search for Runs </a></li> <!--creates list item which is a button, that when clicked brings you to the home page-->
+            <p></p>	  
+                <li><button><a href="running1.html">View and Edit all Runs </a></li> <!--creates list item which is a button, that when clicked brings you to the login page-->
+            <p></p>
+            <li><button><a href="leaderboard.html">Leaderboard </a></li>
+                    
+           
+            </ul>
+        <img src="images/runner1.jpg" align="right"  width="180" height="300"> <!--inserts an image, aligns it left with the size attributes stated-->
+        </nav>
+
+        <article>
+        <!-- <h1>Runs</h1> -->
+        <div id='findByNameForm'> 
+            <!-- <button id="showCreateButton" onclick="showCreate()">Create</button> -->
+            <!-- <button id="showLeaderBoardButton" onclick="showLeaderboardAjax()">Show Leaderboard</button> -->
+        </div>
+        <div>
+            <table class="table" id="runTable">
+                <tr>
+                        <th>id</th>
+                        <th>date </th>
+                        <th>
+                            name
+                        </th>
+                        <!-- <th>Total Distance</th> -->
+                        <th>time</th>
+                        <!-- <th>Update</th>
+                        <th>Delete</th> -->
+                </tr>
+                
+            </table>
+        </div>
+        <div id='createUpdateForm' style="display: none">
+                <h2><span id="createLabel">Create a</span> <span id="updateLabel">update</span> Run</h2>
+                <input type="hidden" name="id"/>
+                date <input type="date" name="date" /><br/>
+                name <input type="text" name="name" /><br/>
+                distance <input type="text" name="distance"/> (Please enter value to one decimal place e.g. 5.0) <br/> 
+                time <input type="text" name="time"/> (Please enter value to one decimal place e.g. 5.0) <br/> 
+                <span><button id="doCreateButton" onclick="doCreate()">Create</button></span>
+                <span><button id="doUpdateButton" onclick="doUpdate()">Update</button></span>
+        </div>
+        
+        </article>
+    </section>
+    </body>
+    <script>
+    function showCreate(){
+        document.getElementById('showCreateButton').style.display="none"
+        document.getElementById('runTable').style.display="none"
+        document.getElementById('createUpdateForm').style.display="block"
+
+        document.getElementById('createLabel').style.display="inline"
+        document.getElementById('updateLabel').style.display="none"
+
+        document.getElementById('doCreateButton').style.display="block"
+        document.getElementById('doUpdateButton').style.display="none"
+        
+    }
+    function showViewAll(){
+        document.getElementById('showCreateButton').style.display="block"
+        document.getElementById('runTable').style.display="block"
+        document.getElementById('createUpdateForm').style.display="none"
+    }
+    function showUpdate(buttonElement){
+        document.getElementById('showCreateButton').style.display="none"
+        document.getElementById('runTable').style.display="none"
+        document.getElementById('createUpdateForm').style.display="block"
+
+        document.getElementById('createLabel').style.display="none"
+        document.getElementById('updateLabel').style.display="inline"
+
+        document.getElementById('doCreateButton').style.display="none"
+        document.getElementById('doUpdateButton').style.display="block"
+
+
+        var rowElement = buttonElement.parentNode.parentNode
+        // these is a way of finding the closest <tr> which would safer, closest()
+        
+        var run = getRunFromRow(rowElement)
+        populateFormWithRun(run)
+    }
+    function doCreate(){
+        var form = document.getElementById('createUpdateForm')
+
+        var run = {}
+       
+        run.date = form.querySelector('input[name="date"]').value
+        run.name = form.querySelector('input[name="name"]').value
+        run.distance = form.querySelector('input[name="distance"]').value
+        run.time = form.querySelector('input[name="time"]').value
+        console.log(JSON.stringify(run))
+        createRunAjax(run)
+    }
+    function findByName(){
+        var form = document.getElementById('findByNameForm')
+        var run = {}  
+        run.name = form.querySelector('input[name="name"]').value
+        console.log(JSON.stringify(run))
+        findByNameAjax(run)
+    }
+    function showLeaderboard(){
+        var form = document.getElementById('findByNameForm')
+        var run = {}  
+        run.name = form.querySelector('input[name="name"]').value
+        console.log(JSON.stringify(run))
+        findByNameAjax(run)
+    }
+
+    function showRecord(){
+        var form = document.getElementById('findByNameForm')
+        var run = {}  
+        run.name = form.querySelector('input[name="name"]').value
+        console.log(JSON.stringify(run))
+        findByNameAjax(run)
+    }
+
+
+
+
+    function doUpdate(){
+        var run = getRunFromForm();
+        var rowElement = document.getElementById(run.id);
+        updateRunAjax(run);
+        setRunInRow(rowElement,run);
+       
+        clearForm();
+        showViewAll();
+    }
+    function doDelete(r){
+        var tableElement = document.getElementById('runTable');
+        var rowElement = r.parentNode.parentNode;
+        var index = rowElement.rowIndex;
+        deleteRunAjax(rowElement.getAttribute("id"));
+        tableElement.deleteRow(index);
+    }
+    function addRunToTable(run){
+        var tableElement = document.getElementById('runTable')
+        var rowElement = tableElement.insertRow(-1) 
+        rowElement.setAttribute('id',run.id)
+        var cell1 = rowElement.insertCell(0);
+        cell1.innerHTML = run.id
+        var cell2 = rowElement.insertCell(1);
+        cell2.innerHTML = run.date
+        var cell3 = rowElement.insertCell(2);
+        cell3.innerHTML = run.name
+        var cell4 = rowElement.insertCell(3);
+        cell4.innerHTML = run.distance
+        var cell5 = rowElement.insertCell(4);
+        cell5.innerHTML = run.time
+        var cell6 = rowElement.insertCell(5);
+        // cell6.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
+        // var cell7 = rowElement.insertCell(6);
+        // cell7.innerHTML = '<button onclick=doDelete(this)>delete</button>'
+
+    }
+
+    function clearForm(){
+        var form = document.getElementById('createUpdateForm')
+
+        form.querySelector('input[name="date"]').value=''
+        form.querySelector('input[name="name"]').value=''
+        form.querySelector('input[name="distance"]').value=''
+        form.querySelector('input[name="time"]').value=''
+    }
+
+// use this function to clear the table after finding a run
+    function clearTable(){ 
+        var form = document.getElementById('table')
+        form.querySelector('input[name="id"]').value=''
+        form.querySelector('input[name="date"]').value=''
+        form.querySelector('input[name="name"]').value=''
+        form.querySelector('input[name="distance"]').value=''
+        form.querySelector('input[name="time"]').value=''
+    }
+    function getRunFromRow(rowElement){
+        var run ={}
+        run.id  = rowElement.getAttribute('id')
+        run.date = rowElement.cells[1].firstChild.textContent
+        run.name = rowElement.cells[2].firstChild.textContent
+        run.distance = parseFloat(rowElement.cells[3].firstChild.textContent) //this may not work
+        run.time = parseFloat(rowElement.cells[4].firstChild.textContent)  //this may not work
+        return run
+    }
+    function setRunInRow(rowElement, run){
+        rowElement.cells[0].firstChild.textContent= run.id  
+        rowElement.cells[1].firstChild.textContent= run.date 
+        rowElement.cells[2].firstChild.textContent= run.name
+        rowElement.cells[3].firstChild.textContent= run.distance
+        rowElement.cells[4].firstChild.textContent= run.time
+    }
+    function populateFormWithRun(run){
+        var form = document.getElementById('createUpdateForm')
+        form.querySelector('input[name="id"]').disabled = true
+
+        form.querySelector('input[name="id"]').value  = run.id
+        form.querySelector('input[name="date"]').value= run.date
+        form.querySelector('input[name="name"]').value= run.name
+        form.querySelector('input[name="distance"]').value= run.distance
+        form.querySelector('input[name="time"]').value= run.time
+        return run
+    }
+    function getRunFromForm(){
+        var form = document.getElementById('createUpdateForm')
+        var run = {}
+        run.id = form.querySelector('input[name="id"]').value
+        run.date = form.querySelector('input[name="date"]').value
+        run.name = form.querySelector('input[name="name"]').value
+        run.distance = parseFloat(form.querySelector('input[name="distance"]').value) //this may not work
+        run.time = parseFloat(form.querySelector('input[name="time"]').value) //this may not work
+        console.log(JSON.stringify(run))
+        return run
+    }
+    function showLeaderboardAjax(){
+        $.ajax({
+            "url": "http://127.0.0.1:5000/leaderboard",
+            "method":"GET",
+            "data":"",
+            "dataType": "JSON",
+            "success":function(result){
+                //console.log(result);
+                for (run of result){
+                    addRunToTable(run);
+                }
+                
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+        
+    }
+
+
+    function showRecordAjax(){
+        $.ajax({
+            "url": "http://127.0.0.1:5000/record",
+            "method":"GET",
+            "data":"",
+            "dataType": "JSON",
+            "success":function(result){
+                //console.log(result);
+                for (run of result){
+                    addRunToTable(run);
+                }
+                
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+        
+    }
+    function createRunAjax(run){
+        //var car = {"reg":"12 D 1234","make":"Fiat","model":"Punto","price":3000}
+        console.log(JSON.stringify(run));
+        $.ajax({
+            "url": "http://127.0.0.1:5000/runs",
+            "method":"POST",
+            "data":JSON.stringify(run),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success":function(result){
+                //console.log(result);
+                run.id = result.id
+                addRunToTable(run)
+                clearForm()
+                showViewAll()
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+    }
+// START HERE NEED TO CREATE FORM FOR TAKING IN NAME
+
+    function findByNameAjax(run){
+        $.ajax({
+            "url": "http://127.0.0.1:5000/runs/"+encodeURI(run.name),
+            "method":"GET",
+            "data":"",
+            "dataType": "JSON",
+            "success":function(result){
+                //console.log(result);
+                for (run of result){
+                    addRunToTable(run);
+                }
+                
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+
+    }
+
+    function updateRunAjax(run){
+        //var car = {"reg":"12 D 1234","price":8000}
+        console.log(JSON.stringify(run));
+        $.ajax({
+            "url": "http://127.0.0.1:5000/runs/"+encodeURI(run.id),
+            "method":"PUT",
+            "data":JSON.stringify(run),
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success":function(result){
+               // console.log(result);
+                  
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+    }
+    function deleteRunAjax(id){
+        
+        //console.log(JSON.stringify('deleting '+id));
+        $.ajax({
+            "url": "http://127.0.0.1:5000/runs/"+encodeURI(id),
+            "method":"DELETE",
+            "data":"",
+            "dataType": "JSON",
+            contentType: "application/json; charset=utf-8",
+            "success":function(result){
+                //console.log(result);
+                  
+            },
+            "error":function(xhr,status,error){
+                console.log("error: "+status+" msg:"+error);
+            }
+        });
+    }
+    showLeaderboardAjax();
+  
+
+    
+    </script>
+</html>

@@ -16,6 +16,13 @@ def getAll():
     results = runsDAO.getAll()
     return jsonify(results)
 
+#curl "http://127.0.0.1:5000/record"
+@app.route('/record')
+def getAllRecords():
+    results = runsDAO.getAllRecords()
+    return jsonify(results)
+
+
 #curl "http://127.0.0.1:5000/runs/2"
 @app.route('/runs/<int:id>')
 def findById(id):
