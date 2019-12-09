@@ -1,4 +1,4 @@
-# dataRepresentation
+# Data Representation
 
 This directory contains the files for the Big Project for Data Representation 2019
 
@@ -30,5 +30,20 @@ The idea of the web application is that users can:
         name | varchar(255) | Yes | | NULL |
         distance | float | YES | | NULL |
         time | float | YES | | NULL |
+
+ - Now that we have created the database, we will need to set up and run the virtual environment
+     - Make the virtual environment by going to the 'Big Project' folder in cmder.exe and typing the following: "python -m venv venv"
+     - Activate by typing: ".\venv\Scripts\activate.bat"
+     - Install flask by typing: "pip install flask"
+     - Pip freeze by typing: "pip freeze > requirements.txt"
+     - Set the server by typing: "set FLASK_APP=server"
+     - Run the server by typing: "flask run"
+
+ - Now that we have the server up and running, we can access the web application by going to "127.0.0.1:5000/running1.html" in our browser
+ - From here, the web application can be used as described above
+
+ The code used when creating the web application can be viewed in the files "runsDAO.py", "server.py", "leaderboard.html", "running1.html" and "search.html".  The "Superceded" folder contains test files that were used during the creation of the web application.  They do not have any functionality for the final application.
+
+
 
 
