@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title> view Runs</title>
+        <title> 5k World Records</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -74,7 +74,9 @@
                 <li><button><a href="running1.html">View and Edit all Runs </a></li> <!--creates list item which is a button, that when clicked brings you to the login page-->
             <p></p>
             <li><button><a href="leaderboard.html">Leaderboard </a></li>
-                    
+            <p></p>
+            <li><button><a href="record.html">5k World Records </a></li>
+          
            
             </ul>
         <img src="images/runner1.jpg" align="right"  width="180" height="300"> <!--inserts an image, aligns it left with the size attributes stated-->
@@ -217,10 +219,10 @@
         var cell3 = rowElement.insertCell(2);
         cell3.innerHTML = run.name
         var cell4 = rowElement.insertCell(3);
-        cell4.innerHTML = run.distance
-        var cell5 = rowElement.insertCell(4);
-        cell5.innerHTML = run.time
-        var cell6 = rowElement.insertCell(5);
+        cell4.innerHTML = run.time
+        // var cell5 = rowElement.insertCell(4);
+        // cell5.innerHTML = run.time
+        // var cell6 = rowElement.insertCell(5);
         // cell6.innerHTML = '<button onclick="showUpdate(this)">Update</button>'
         // var cell7 = rowElement.insertCell(6);
         // cell7.innerHTML = '<button onclick=doDelete(this)>delete</button>'
@@ -402,7 +404,7 @@
             }
         });
     }
-    showLeaderboardAjax();
+    showRecordAjax();
   
 
     

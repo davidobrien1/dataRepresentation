@@ -5,7 +5,7 @@ This directory contains the files for the Big Project for Data Representation 20
 This project involved the development of the following:
  - A basic Flask server that has a
  - REST API, (to perform CRUD operation)
- - One database table and 
+ - Two database tables and 
  - Accompanying web interface, using AJAX calls, to perform these CRUD operations
 
 The idea of the web application is that users can:
