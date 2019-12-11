@@ -9,7 +9,7 @@ class RunsDAO:
         database="running"
         )
     
-            
+    # The functions below perform the sql queries on the running database as described by the name of the functions  
     def create(self, values):
         cursor = self.db.cursor()
         sql="insert into runs (date, name, distance, time) values (%s,%s,%s,%s)"

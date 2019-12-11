@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
     <style>
+
+    /* the following code within the style tag has been adapted from www.w3schools.com.  The style is set for the different elements including the header, section (navigation bar and section).  It uses flex boxes for the webpage */
     header {
         background-color: #7884BB;
         padding: 5px;
@@ -25,12 +27,14 @@
         border-style: solid;
         border-color: white; 
         }
+    /* Container for flexboxes */
     section {
     display: -webkit-flex;
     display: flex;
     border-style: dotted;
     border-color: black;
     }
+    /* Style the navigation menu */
     nav {
         -webkit-flex: 1;
         -ms-flex: 1;
@@ -40,11 +44,13 @@
         border-style: none dotted none none;
         border-color: black;
     }
+    /* Style the list inside the menu */
     nav ul {
         list-style-type: none;
         padding: 0;
         text-align: center;
     }
+    /* Style the content */
     article {
         -webkit-flex: 3;
         -ms-flex: 3;
@@ -60,8 +66,8 @@
     <header>
     </header>  
     <div class="intro">    
-        <h2><center>Running Tracker App</center></h2> 
-        <p>Welcome to the Running Tracker App.  This app allows you to create, log and edit your runs.   </p>
+        <h2><center>Running Tracker App</center></h2> <!--creates a heading h2 and centers it-->
+        <p>Welcome to the Running Tracker App.  This app allows you to create, log and edit your runs.   </p><!--this is a paragraph within the intro div-->
         <p>There are other available features which can be accessed by clicking one of the buttons in the menu on the left hand side</p> 
         <p>Below, you will see a list of all runs logged by various users   </p>  
         <p>Click the "Create" button to create a new run. You can update or delete a run by clicking the relevant button.</p>
@@ -70,8 +76,8 @@
         <nav>
 
         <p></p>
-            <ul> 
-                <li><button><a href="search.html">Search for Runs </a></li> 
+            <ul> <!--creates an unordered list-->
+                <li><button><a href="search.html">Search for Runs </a></li> <!--creates list item which is a button, that when clicked brings you to the search page-->
             <p></p>	  
                 <li><button><a href="running1.html">View, Create and Edit all Runs </a></li> 
             <p></p>	  
@@ -79,7 +85,7 @@
             <p></p>
             <li><button><a href="record.html">5k World Records </a></li>
             </ul>
-        <img src="images/runner1.jpg" align="right"  width="180" height="300"> 
+        <img src="images/runner1.jpg" align="right"  width="180" height="300"> <!--inserts an image, aligns it right with the size attributes stated-->
         </nav>
 
         <article>
@@ -117,6 +123,8 @@
     </section>
     </body>
     <script>
+
+    // Functions below for various operations as described in the function name
     function showCreate(){
         document.getElementById('showCreateButton').style.display="none"
         document.getElementById('runTable').style.display="none"
@@ -253,7 +261,7 @@
         console.log(JSON.stringify(run))
         return run
     }
-
+    // Ajax calls
     function getAllAjax(){
         $.ajax({
             "url": "http://127.0.0.1:5000/runs",

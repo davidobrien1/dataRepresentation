@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
     <style>
+
+    /* the following code within the style tag has been adapted from www.w3schools.com.  The style is set for the different elements including the header, section (navigation bar and section).  It uses flex boxes for the webpage */
+
     header {
         background-color: #7884BB;
         padding: 5px;
@@ -25,12 +28,15 @@
         border-style: solid;
         border-color: white; 
         }
+    /* Container for flexboxes */
     section {
     display: -webkit-flex;
     display: flex;
     border-style: dotted;
     border-color: black;
     }
+
+    /* Style the navigation menu */
     nav {
         -webkit-flex: 1;
         -ms-flex: 1;
@@ -40,11 +46,15 @@
         border-style: none dotted none none;
         border-color: black;
     }
+
+    /* Style the list inside the menu */
     nav ul {
         list-style-type: none;
         padding: 0;
         text-align: center;
     }
+
+    /* Style the content */
     article {
         -webkit-flex: 3;
         -ms-flex: 3;
@@ -60,8 +70,8 @@
     <header>
     </header>  
     <div class="intro">    
-        <h2><center>Running Tracker App</center></h2> 
-        <p>Some interersting 5k records..... the top ten fastest 5k runs can be seen below!</p>   
+        <h2><center>Running Tracker App</center></h2> <!--creates a heading h2 and centers it-->
+        <p>Some interersting 5k records..... the top ten fastest 5k runs can be seen below!</p>   <!--this is a paragraph within the intro div--> 
     </div>
     <section>
         <nav>
@@ -77,7 +87,7 @@
             <li><button><a href="record.html">5k World Records </a></li>
     
             </ul>
-        <img src="images/runner1.jpg" align="right"  width="180" height="300"> 
+        <img src="images/runner1.jpg" align="right"  width="180" height="300"> <!--inserts an image, aligns it right with the size attributes stated-->
         </nav>
 
         <article>
@@ -98,6 +108,7 @@
     </body>
     <script>
 
+    // Functions below for various operations as described in the function name
     function showRecord(){
         var form = document.getElementById('findByNameForm')
         var run = {}  
@@ -119,7 +130,7 @@
         var cell4 = rowElement.insertCell(3);
         cell4.innerHTML = run.time
     }
-
+    // Ajax calls
     function showRecordAjax(){
         $.ajax({
             "url": "http://127.0.0.1:5000/record",
