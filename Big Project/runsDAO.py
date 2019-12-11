@@ -6,8 +6,6 @@ class RunsDAO:
         host="localhost",
         user="root",
         password="",
-        #user="datarep",  # this is the user name on my mac
-        #passwd="password" # for my mac
         database="running"
         )
     
@@ -57,7 +55,7 @@ class RunsDAO:
 
     def getLeaderBoard(self):
         cursor = self.db.cursor()
-        sql="select *, ROUND(SUM(distance),1) from runs group by name order by distance desc"
+        sql="select * from runs order by distance desc"
         cursor.execute(sql)
         results = cursor.fetchall()
         returnArray = []
