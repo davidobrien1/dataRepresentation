@@ -60,15 +60,15 @@
     <header>
     </header>  
     <div class="intro">    
-        <h2><center>Running Tracker App</center></h2> <!--creates a heading h2 and centers it-->
-        <p>To search for your runs, please enter your name in the box below and click the "Find run by Name" button</p> <!--this is a paragraph within the intro div-->  
+        <h2><center>Running Tracker App</center></h2> 
+        <p>To search for your runs, please enter your name in the box below and click the "Find run by Name" button</p> 
     </div>
     <section>
         <nav>
 
         <p></p>
-            <ul> <!--creates an unordered list-->
-                <li><button><a href="search.html">Search for Runs </a></li> <!--creates list item which is a button, that when clicked brings you to the search page-->
+            <ul> 
+                <li><button><a href="search.html">Search for Runs </a></li> 
             <p></p>	  
                 <li><button><a href="running1.html">View, Create and Edit all Runs</a></li> 
             <p></p>
@@ -78,7 +78,7 @@
             <li><button><a href="record.html">5k World Records </a></li>
             </ul>
 
-        <img src="images/runner1.jpg" align="right"  width="180" height="300"> <!--inserts an image, aligns it right with the size attributes stated-->
+        <img src="images/runner1.jpg" align="right"  width="180" height="300"> 
         </nav>
 
         <article>
@@ -132,7 +132,6 @@
             "data":"",
             "dataType": "JSON",
             "success":function(result){
-                //console.log(result);
                 for (run of result){
                     addRunToTable(run);
                 }

@@ -3,13 +3,6 @@ from runsDAO import runsDAO
 
 app = Flask(__name__, static_url_path='', static_folder='.')
 
-
-#app = Flask(__name__)
-
-#@app.route('/')
-#def index():
-#    return "Hello, World!"
-
 #curl "http://127.0.0.1:5000/runs"
 @app.route('/runs')
 def getAll():
@@ -54,8 +47,7 @@ def findByName(name):
 def create():
     
     if not request.json:
-        abort(400)
-    # other checking 
+        abort(400) 
     run = {
         "date": request.json['date'],
         "name": request.json['name'],
@@ -100,17 +92,6 @@ def update(id):
 def delete(id):
     runsDAO.delete(id)
     return jsonify({"done":True})
-
-#TODO: Finish this
-# @app.route('/totalruns/<int:id>' , methods=['POST'])
-# def addRun(runnerId):
-#     return "in add Run for funner" + str(runnerId)
-#TODO: Finish this
-# @app.route('/totalruns/leaderboard')
-# def getleaderBoard():
-#     return "in get leaderBoard"
-
-
 
 if __name__ == '__main__' :
     app.run(debug= True)
